@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "522036053334",
+    "project_id": "dutchfoodlabs-82687",
+    "storage_bucket": "dutchfoodlabs-82687.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522036053334:android:5e9b23c7d49dc3606902f7",
+        "android_client_info": {
+          "package_name": "com.example.dflsbx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEGZXmC8qOy8byaw215aUq04k7tqOJZWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
