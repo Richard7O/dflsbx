@@ -1,26 +1,27 @@
 import 'package:dflsbx/features/user_auth/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:dflsbx/features/user_auth/presentation/pages/sign_up_page.dart';
+import 'package:dflsbx/features/user_auth/presentation/pages/home_page.dart';
+import 'package:dflsbx/features/user_auth/presentation/pages/login_page.dart';
 import 'package:dflsbx/features/user_auth/presentation/widgets/entry_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dflsbx/features/user_auth/presentation/pages/home_page.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
 
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
+    usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          'Login',
+          'Sign up',
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
@@ -42,9 +43,17 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Welcome, please login'),
+              Text('Welcome, please sign up'),
               SizedBox(
                 height: 30.0,
+              ),
+              EntryField(
+                controller: usernameController,
+                hintText: 'User name',
+                isPasswordField: false,
+              ),
+              SizedBox(
+                height: 15.0,
               ),
               EntryField(
                 controller: emailController,
@@ -61,26 +70,26 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 30.0),
               ElevatedButton(
-                onPressed: signIn,
-                child: Text('Login'),
+                onPressed: signUp,
+                child: Text('Sign up'),
                 style: ElevatedButton.styleFrom(elevation: 10.0),
               ),
               SizedBox(height: 30.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an account?"),
+                  Text("Already have an account?"),
                   SizedBox(width: 5.0),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                         ModalRoute.withName('/'),
                       );
                     },
                     child: Text(
-                      'Sign up',
+                      'Login',
                       style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -93,41 +102,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void signIn() async {
-    User? user = await _auth.signInWithEmailAndPassword(emailController.text, passwordController.text);
+  void signUp() async {
+    User? user = await _auth.signUpWithEmailAndPassword(emailController.text, passwordController.text);
     if (user != null) {
       if (mounted) {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
       }
     } else {
-      if (mounted) {
-        showAlertDialog(context);
-      }
+      print("Error handling");
     }
-  }
-
-  showAlertDialog(BuildContext context) {
-    Widget okButton = TextButton(
-      child: Text("Ok"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Invalid login credentials"),
-      content: Text("The email address or password provided is incorrect"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }

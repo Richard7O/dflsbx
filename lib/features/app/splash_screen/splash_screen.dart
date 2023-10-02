@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(
-      Duration(seconds: 2),
+      Duration(seconds: 3),
       () {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
       },
@@ -24,11 +24,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Color(0xff1a4333),
       body: Center(
-          child: Text(
-        'Dutch Food Lab',
-        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 14.0),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 8),
+            child: Image.asset('assets/images/dfl_logo_white_on_green.png'),
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Text(
+            'Geef je lichaam wat het verdient!',
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18.0),
+          ),
+        ],
       )),
     );
   }

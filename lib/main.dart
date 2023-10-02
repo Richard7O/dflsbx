@@ -1,6 +1,10 @@
 import 'package:dflsbx/features/app/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+
+final String? _fontFamily = GoogleFonts.quicksand().fontFamily;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +21,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dutch Food Labs Sandbox',
       themeMode: ThemeMode.light,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff1a4333)),
+      debugShowCheckedModeBanner: false,
+      theme: FlexThemeData.light(
         useMaterial3: true,
+        scheme: FlexScheme.greenM3,
+        fontFamily: _fontFamily,
       ),
-      darkTheme: ThemeData.dark(
+      darkTheme: FlexThemeData.dark(
         useMaterial3: true,
+        scheme: FlexScheme.greenM3,
+        fontFamily: _fontFamily,
       ),
       home: const SplashScreen(),
     );
